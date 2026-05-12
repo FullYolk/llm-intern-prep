@@ -17,6 +17,7 @@ def use_enumerate(fruits:List):
     for i, word in enumerate(fruits):
         hash_map[i] = word
     print(hash_map)
+    
     return
 def use_zip(head:List,tail:List)->dict:
     return dict(zip(head,tail))
