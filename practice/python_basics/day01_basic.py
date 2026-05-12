@@ -1,4 +1,4 @@
-def getAverage(nums):
+def get_average(nums):
     if not nums:
         return 0
     return sum(nums)/len(nums)
@@ -13,6 +13,7 @@ def main():
     print("average:",avg)
     text = "Hello Agent"
     char_count = count_chars(text)
+    print("char_count:", char_count)
     with open("day01_output.txt","w",encoding="utf-8") as f:
         f.write(f"average:{avg}\n")
         f.write(f"char_count:{char_count}\n")
