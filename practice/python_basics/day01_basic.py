@@ -9,7 +9,7 @@ def count_chars(s):
     return result
 def main():
     nums = [85,90,78,92,88]
-    avg = getAverage(nums)
+    avg = get_average(nums)
     print("average:",avg)
     text = "Hello Agent"
     char_count = count_chars(text)
