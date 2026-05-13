@@ -18,8 +18,8 @@ def main():
     s2 = Student("Bob", 55)
 
     print(s1)
-    print(f"{s1.name},{s1.is_passed}")
-    print(f"{s2.name},{s2.is_passed}") 
+    print(f"{s1.name},{s1.is_passed()}")
+    print(f"{s2.name},{s2.is_passed()}") 
 
     student_list:List[Student] = [s1,s2]
 

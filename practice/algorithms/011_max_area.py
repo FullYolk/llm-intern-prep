@@ -1,3 +1,4 @@
+from typing import List
 class Solution:
     def maxArea(self, height: List[int]) -> int:
         n = len(height)
@@ -5,7 +6,7 @@ class Solution:
         j = n-1
         max_area = 0
         area = 0
-        while i != j:
+        while i < j:
             if height [i] > height [j]:
                 area = height[j]*(j-i)
                 j = j - 1

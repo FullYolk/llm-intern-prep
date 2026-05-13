@@ -1,0 +1,1 @@
+* 不要用len,list,dict这种Python内置名字当变量名
