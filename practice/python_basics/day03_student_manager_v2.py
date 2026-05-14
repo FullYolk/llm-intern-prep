@@ -38,14 +38,14 @@ def find_student(students: List[dict], name: str) -> dict | None:
 def delete_student(students: List[dict], name: str) -> bool:
     for s in students:
         if s["name"] == name:
-            students.remove(s)
+            students.pop(s)
             return True
     return False
     
 def sort_students(students: List[dict]) -> List[dict]:
-    return sorted(students, key=lambda x: (-x["score"], x["name"]), reverse=False)
+    return sorted(students, key=lambda x: (-x["score"], x["name"]))# 默认reverse = False(升序排列)
 
-def get_average_score(students: List[dict]) -> int:
+def get_average_score(students: List[dict]) -> float:
     if not students:
         return 0.0
     return sum(s["score"] for s in students) / len(students)
