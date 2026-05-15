@@ -10,9 +10,12 @@ def post_test():
     print(response.json())
 
 def timeout_test():
-    response = httpx.get("https://httpbin.org/get",params={"user": "beihang_cs","level": 99},timeout=0.00000001)
-    print(response.status_code)
-    print(response.json())
+    try:
+        response = httpx.get("https://httpbin.org/get",params={"user": "beihang_cs","level": 99},timeout=0.00000001)
+        print(response.status_code)
+        print(response.json())
+    except httpx.TimeoutException:
+        print("Timeout")
 
 def except_test():
     try:

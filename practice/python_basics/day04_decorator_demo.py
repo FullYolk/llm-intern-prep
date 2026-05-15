@@ -1,11 +1,13 @@
 import time
 import logging
+from functools import wraps
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s %(message)s]"
+    format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
 def time_logger(func):
+    @wraps(func)
     def wrapper(*args, **kwargs): #接收一切可能的参数
         start = time.perf_counter()
         result = func(*args, **kwargs) #传参
