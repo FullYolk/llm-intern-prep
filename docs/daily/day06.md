@@ -36,3 +36,5 @@
 * 在SSE协议里 当media_type="text/event-stream" 格式为：data: 你的内容\n\n
 * 大模型 AGENT工具中使用流式输出 前端与交互体验好 使得首字响应延迟（TTFT）短 用户体验好
 * 当流式输出锻炼 Uvicorn会抛出asyncio.CancelledError异常 我们需要用try...finally块处理
+## 算法
+* 反转链表 相交链表 回文链表
