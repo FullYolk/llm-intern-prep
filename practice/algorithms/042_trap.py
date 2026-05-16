@@ -1,3 +1,6 @@
+from typing import List
+
+
 class Solution:
     def trap(self, height: List[int]) -> int:
         left = 0
@@ -15,3 +18,4 @@ class Solution:
                 result += right_max - height[right]
                 right -= 1
         return result
+#双指针 按照木桶效应计算自己头上的水
