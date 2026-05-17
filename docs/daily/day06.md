@@ -1,9 +1,9 @@
 ## 修day5bug：
-* 装饰器参数里加respnse_model:数据脱敏与过滤（fastapi自动修正数据类型 剔除无关数据后再发给前端） 出口数据校验 补全swagger文档
+* 装饰器参数里加response_model:数据脱敏与过滤（fastapi自动修正数据类型 剔除无关数据后再发给前端） 出口数据校验 补全swagger文档
 * status_code（HTTP状态码）:200:OK 201：Created(成功受到请求并创建实体资源)
 ## 异常处理进阶
 * Exception:Python原生异常基类 纯业务代码遇到错误跑出异常
-* HTTPExecption:预期中的业务逻辑拒绝 是我们主动预判到不合理操作时抛出的异常 本身就是FastAPI提供的类 自带HTTP状态码 写在顶层的路由函数中
+* HTTPException:预期中的业务逻辑拒绝 是我们主动预判到不合理操作时抛出的异常 本身就是FastAPI提供的类 自带HTTP状态码 写在顶层的路由函数中
 * 自定义异常：业务中自定义的异常 可以在web层拦截
 * 全局异常处理器：全局拦截异常 处理非预期的系统崩溃 将所有未知的500错误拦截 转化为更友好的报错 自定义处理方式 可以配合自定义异常进行使用处理 将错误翻译成HTTP状态码返回给前端
 * 在真实项目中 如果让500异常直接冒到前端 会返回堆栈错误代码 不利于项目的安全性 同时由于返回的不是标准JSON 前端无法处理解析
@@ -32,9 +32,9 @@
 * 在文档问答 RAG等内容中至关重要
 ## 流式输出
 * 用法：引入StreamingResponse 结合yield
-* yield:异步生成器函数
+* yield:生成器语法 如果出现在async def里 就是异步生成器的一部分
 * 在SSE协议里 当media_type="text/event-stream" 格式为：data: 你的内容\n\n
 * 大模型 AGENT工具中使用流式输出 前端与交互体验好 使得首字响应延迟（TTFT）短 用户体验好
-* 当流式输出锻炼 Uvicorn会抛出asyncio.CancelledError异常 我们需要用try...finally块处理
+* 当流式输出断连 Uvicorn会抛出asyncio.CancelledError异常 我们需要用try...finally块处理
 ## 算法
 * 反转链表 相交链表 回文链表

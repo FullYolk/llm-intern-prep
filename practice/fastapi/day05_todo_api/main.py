@@ -7,8 +7,8 @@ import asyncio
 import time
 import os
 import shutil
-import asyncio
 from fastapi import File,UploadFile
+import uuid
 app = FastAPI()
 
 @app.exception_handler(ValueError)
@@ -45,14 +45,14 @@ def create_todo(todo:TodoCreate):
 
 @app.delete("/todos/{todo_id}")
 def delete_todo(todo_id:int):
-    for todo in fake_db:
+    for i, todo in enumerate(fake_db):
         if todo.id == todo_id:
-            fake_db.remove(todo)
+            fake_db.pop(i)
             return {"msg": "删除成功"}
     raise HTTPException(status_code=404,detail="未找到该TODO")
 
 @app.get("/todos/{todo_id}")
-def get_single_todo(todo_id:int):
+def get_single_todo(todo_id:int,response_moedel = Todo):
     for todo in fake_db:
         if todo.id == todo_id:
             return todo
@@ -77,8 +77,11 @@ async def upload_file(file:UploadFile = File(...)):
     upload_dir = "uploads"
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
+
+    ext = os.path.splitext(file.filename)[1]
+    safe_filename = f"{uuid.uuid4().hex}{ext}"
     
-    file_path = f"{upload_dir}/{file.filename}"
+    file_path = os.path.join(upload_dir,safe_filename)
 
     with open(file_path,"wb") as buffer:
         shutil.copyfileobj(file.file,buffer)
