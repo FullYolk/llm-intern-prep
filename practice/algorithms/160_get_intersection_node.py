@@ -19,3 +19,5 @@ class Solution:
                 p2 = p2.next
         return p1
             
+#双指针
+#“因为我们走过彼此走过的路，所以我们最终必定相遇。”

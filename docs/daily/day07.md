@@ -21,9 +21,9 @@
 - docker start my-redis
 - docker rm my-redis 删除
 * Redis的优势: 跨进程共享 断电不丢数据 有List Expire等高阶数据结构
-* 在Agent开发中 存储聊天历史 做API限流 缓存结果
+* 在Agent开发中 存储聊天历史 做API限流 缓存结果 Redis 是内存数据库，速度快；支持 RDB/AOF 持久化，开启后可以在重启后恢复数据。
 ## Git与Linux命令复习
-* git merge:合并 生成全新的提交 绝对安全
+* git merge:合并 生成全新的提交 绝对安全 git merge: 合并分支，通常不会改写已有历史；可能产生 merge commit，也可能 fast-forward。
 * git rebase：变基 会篡改历史 直接插到main分支的最顶端 永远不要在公共分支上rebase
 * git reset:直接消失commit 没Push时使用 保持历史干净
 * git revert:生成全新的commit 追加历史

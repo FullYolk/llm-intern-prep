@@ -32,3 +32,5 @@ class MinStack:
 # obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.getMin()
+
+#比较辅助栈的栈顶元素和当前数
