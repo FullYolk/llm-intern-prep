@@ -12,4 +12,26 @@
 | 403 | 无权限 |
 | 404 | 资源不存在 |
 | 500 | 服务端错误 |
-## Docker运行Redis
+## Docker运行Redis 常用命令
+- docker pull redis 拉取镜像
+- docker run -d --name my-redis -p 6379:6379 redis 启动容器 -d后台运行 -p端口映射 宿主机端口:容器内端口
+- docker ps 列出容器信息
+- docker exec -it my-redis redis-cli exec 进入容器 -it:交互式输入 分配伪终端 redis-cli具体命令
+- docker stop my-redis
+- docker start my-redis
+- docker rm my-redis 删除
+* Redis的优势: 跨进程共享 断电不丢数据 有List Expire等高阶数据结构
+* 在Agent开发中 存储聊天历史 做API限流 缓存结果
+## Git与Linux命令复习
+* git merge:合并 生成全新的提交 绝对安全
+* git rebase：变基 会篡改历史 直接插到main分支的最顶端 永远不要在公共分支上rebase
+* git reset:直接消失commit 没Push时使用 保持历史干净
+* git revert:生成全新的commit 追加历史
+pwd
+ls
+ls -la
+find . -name "*.py"
+find . -name "*.md"
+grep -R "FastAPI" .
+## 算法
+和为K的子数组 前缀和+哈希

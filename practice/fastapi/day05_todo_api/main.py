@@ -7,9 +7,14 @@ import asyncio
 import time
 import os
 import shutil
+import logging
 from fastapi import File,UploadFile
 import uuid
 app = FastAPI()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
 
 @app.exception_handler(ValueError)
 async def value_error_handler(request:Request, exc:ValueError):
@@ -26,7 +31,7 @@ async def log_requests(request:Request, call_next):
     start_time = time.perf_counter()
     response = await call_next(request)
     end_time = time.perf_counter()
-    print(f"{request.method}, {request.url.path}, {end_time-start_time}")
+    logging.info(f"{request.method} {request.url.path} cost={end_time-start_time:.4f}s")
     return response
 
 @app.get("/todos",response_model = list[Todo])
@@ -51,8 +56,8 @@ def delete_todo(todo_id:int):
             return {"msg": "删除成功"}
     raise HTTPException(status_code=404,detail="未找到该TODO")
 
-@app.get("/todos/{todo_id}")
-def get_single_todo(todo_id:int,response_moedel = Todo):
+@app.get("/todos/{todo_id}",response_moedel = Todo)
+def get_single_todo(todo_id:int):
     for todo in fake_db:
         if todo.id == todo_id:
             return todo
