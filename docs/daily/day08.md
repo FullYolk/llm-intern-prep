@@ -50,7 +50,7 @@ Parameter Out of Range：
 ## 算法
 * 频率最大的topk元素
 * 使用Counter:自动计数各个数字出现的次数
-* 返回格式是List[{num:freq}]
+* 返回一个“元素 -> 出现次数”的映射，本质上类似字典。
 * 堆：使用python实现的heapq
 * heapq.heappush与heapq.heappop（默认为小顶堆）# 大顶堆怎么操作？
 * 取元组：可以用列表推导式（类似数组的方式） 也可以用元组解包
