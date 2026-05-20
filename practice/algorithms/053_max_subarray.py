@@ -1,7 +1,8 @@
+from typing import List
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         sums = []
-        max = -10e4-1
+        max_sum = -10e4-1
         min_pre_sum= 0
         for i, num in enumerate(nums):
             if i == 0:
@@ -11,13 +12,13 @@ class Solution:
 
         for i in range(len(sums)):
             if sums[i] - min_pre_sum > max:
-                max = sums[i] - min_pre_sum
+                max_sum = sums[i] - min_pre_sum
             if sums[i] < min_pre_sum:
                 min_pre_sum = sums[i]
             if sums[i] > max:
-                max = sums[i]
+                max_sum = sums[i]
             
-        return max
+        return max_sum
 ##下面是推荐的算法
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:

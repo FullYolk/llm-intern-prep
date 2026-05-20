@@ -11,7 +11,7 @@ class JDExtraction(BaseModel):
     requires_rag_agent:bool
     duration_requirement:str
 
-def jd_exrtactor(text:str):
+def jd_extractor(text:str):
     schema_str = JDExtraction.model_json_schema()
     messages = []
     messages.append({"role":"system", "content":f"你是一个资深的HR助手，擅长从招聘JD中提取结构化信息。核心要求是必须且只能输出合法的JSON字符串，JSON的字段要求为：{schema_str}不要包裹任何markdown语法，不要有任何多余输出与解释，我将使用json.loads对其进行提取，因此务必不要输出任何额外内容，仅输出合法JSON字符串"})
@@ -21,19 +21,16 @@ def jd_exrtactor(text:str):
     client = llm_client.get_client()
     response = client.chat.completions.create(model=MODEL_NAME,messages=messages,temperature=0.0)
     content = response.choices[0].message.content
+    if not content:
+        print("模型返回为空")
     try:
         dic = json.loads(content)
         info = JDExtraction(**dic)
-        print("✅ 提取成功！")
-        print(f"岗位名称: {info.job_title}")
-        print(f"技术栈: {info.tech_stack}")
-        print(f"要求Java: {info.requires_java}")
-        print(f"要求RAG/Agent: {info.requires_rag_agent}")
-        print(f"实习时间: {info.duration_requirement}")
+        return info
     except json.JSONDecodeError:
         print("大模型没成功说出JSON！")
-    except ValidationError:
-        print("漏掉了某些字段！")
+    except ValidationError as e:
+        print("漏掉了某些字段！",e)
 
 def main():
     target_jd = """
@@ -44,7 +41,14 @@ def main():
     4. 实习期保证4个月以上，每周4天。
     5. 会Go或Java是加分项，但非必需。
     """
-    jd_exrtactor(target_jd)
+    info = jd_extractor(target_jd)
+    if info:
+        print("✅ 提取成功！")
+        print(f"岗位名称: {info.job_title}")
+        print(f"技术栈: {info.tech_stack}")
+        print(f"要求Java: {info.requires_java}")
+        print(f"要求RAG/Agent: {info.requires_rag_agent}")
+        print(f"实习时间: {info.duration_requirement}")
 
 if __name__ == "__main__":
     main()
