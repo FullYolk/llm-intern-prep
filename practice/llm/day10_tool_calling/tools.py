@@ -13,7 +13,7 @@ def get_weather(city:str) -> dict:
         "深圳": {"weather": "台风", "temperature": "28°C"}
     }
 
-    result = db.get(city,{"weather": "未知", "temperature": "未知"})
+    result = db.get(city,{"weather": "未知", "temperature": "未知"}).copy()
     result["city"] = city
     return result
 
