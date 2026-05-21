@@ -19,7 +19,7 @@ def get_weather(city:str) -> dict:
 
 def calculate(expression:str) -> dict:
     try:
-        result = eval(expression)
+        result = eval(expression) #危险 仅用于demo
         return {"expression":expression,"result":result}
     except Exception as e:
         return {"error":f"计算失败：{str(e)}"}
