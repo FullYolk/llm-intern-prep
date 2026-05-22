@@ -18,3 +18,4 @@ class Solution:
                 current_str = current_str + ch
         return current_str
 
+# 压栈后记得清空当前状况
