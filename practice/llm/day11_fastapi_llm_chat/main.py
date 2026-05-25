@@ -1,6 +1,7 @@
 from fastapi import FastAPI,HTTPException
+from fastapi.responses import StreamingResponse
 from schemas import ChatRequest,ChatResponse
-from llm_service import chat_with_history, clear_session_history
+from llm_service import chat_with_history, clear_session_history,stream_chat_with_history
 import logging
 
 app = FastAPI(title="Agent学习助手API")
@@ -27,6 +28,17 @@ def chat_endpoint(request: ChatRequest):
 @app.get("/health")
 def health_check():
     return {"status":"ok","message":"service is running"}
+
+@app.post("/chat/stream") 
+def chat_stream_endpoint(request:ChatRequest):
+    session_id = request.session_id
+    safe_msg = request.message[:10] + "..." if len(request.message) > 10 else request.message
+
+    logging.info(f"[Stream Start] 收到流式请求 | session_id: {session_id} | 消息预览: {safe_msg}")
+    return StreamingResponse(
+        stream_chat_with_history(request.session_id, request.message),
+        media_type = "text/event-stream"
+    )
 
 @app.delete("/sessions/{session_id}")
 def clear_session(session_id:str):
