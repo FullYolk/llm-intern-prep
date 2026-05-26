@@ -13,7 +13,7 @@ llm = ChatOpenAI(
     temperature=0.0
 )
 
-prompt = ChatPromptTemplate([
+prompt = ChatPromptTemplate.from_messages([
     ("system","你是一个资深的HR助手，请用一句简短的话总结候选人的核心亮点。"),
     ("human","候选人信息{text}")
 ])
@@ -28,7 +28,7 @@ inputs = [
     {"text": "王五是产品经理，不懂代码。"}
 ]
 
-result = chain.batch(inputs)
+result = chain.batch(inputs,config={"max_concurrency":3})
 
 print(type(result))
 print(result)

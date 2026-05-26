@@ -13,7 +13,7 @@ llm = ChatOpenAI(
     temperature=0.0
 )
 
-prompt = ChatPromptTemplate([
+prompt = ChatPromptTemplate.from_messages([
     ("system","你是一个信息抽取助手，只需要输出JSON"),
     ("human","给定文本{text},按照以下格式输出{format_instructions}")
 ])

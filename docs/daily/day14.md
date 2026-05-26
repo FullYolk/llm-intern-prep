@@ -25,7 +25,8 @@ chain = partial_prompt | llm | parser
 chain.batch([{"text": "张三..."}, {"text": "李四..."}])
 * 流式输出部分：LangChain的hain.stream() 确实把大模型的残缺 Chunk 拼成了干净的纯文本，但并没有封装成SSE格式。在FastAPI里集成时，我们必须自己做一次包装，将纯文本打包成SSE协议，并推送给前端。
 * 对于batch，为了防止被误判为DDoS攻击，生产中必须配置config={"max_concurrency":xxx}来限制并发数
-* 在后端框架中 不要使用chain.stream(),必须使用异步版本:chain.astream()
+* 在 async FastAPI 路由中，优先使用 chain.astream()，避免同步阻塞事件循环。
+* 如果是普通 def 路由或已经放在线程池中，chain.stream() 也可以使用。
 * RunnableParallel(分流器): 将prompt分成多个变量，例如在RAG项目中:setup_and_retrieval = RunnableParallel(
     # 支流 1：把用户问题拿去查数据库，返回一堆文档给 context
     context=retriever, 
