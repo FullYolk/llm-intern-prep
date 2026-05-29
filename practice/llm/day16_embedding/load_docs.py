@@ -3,7 +3,10 @@ from pathlib import Path
 
 def load_markdown_docs(data_dir: str) -> list[Document]:
     docs = []
-    for path in Path(data_dir).glob("*.md"):
+    current_dir = Path(__file__).parent
+    real_data_path = current_dir/data_dir
+
+    for path in real_data_path.glob("*.md"):
         text = path.read_text(encoding="utf-8")
         docs.append(Document(
             page_content=text,

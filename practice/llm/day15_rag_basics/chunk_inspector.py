@@ -19,8 +19,8 @@ def main():
         print(f"参数调优: chunk_size = {size}")
         print(f"实验结果: 共切分出 {len(chunks)} 个 chunk")
         
-        
-        print(f"样本预览: {chunks[0].page_content[:30]}...")
+        if chunks:
+            print(f"样本预览: {chunks[0].page_content[:30]}...")
         print("-" * 20)
 if __name__ == "__main__":
     main()
