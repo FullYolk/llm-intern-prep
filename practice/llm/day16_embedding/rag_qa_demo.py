@@ -20,10 +20,12 @@ current_dir = Path(__file__).parent
 PERSIST_DIR = str(current_dir/"chroma_db")
 
 def build_context(results:list) -> str:
-    res = ""
-    for (doc, score) in results:
-        res = res + "[来源:" + doc.metadata.get('filename') + "]" + doc.page_content + "\n"
-    return res
+    parts = []
+    for i,(doc, score) in enumerate(results, 1):
+        parts.append(
+            f"[片段{i} | 来源:{doc.metadata.get('filename')} | 分数:{score:.4f}]\n{doc.page_content}"
+        )
+    return "\n\n".join(parts)
 
 def answer_with_rag(query:str, k:int =3):
     vector_store = Chroma(
@@ -41,14 +43,18 @@ def answer_with_rag(query:str, k:int =3):
         temperature=0.0
     )
     sources = []
+    seen = set()
     for (doc, score) in results:
-        sources.append(doc.metadata.get("filename"))
+        filename = doc.metadata.get("filename")
+        if filename not in seen:
+            seen.add(filename)
+            sources.append(filename)
     return {"answer":response.choices[0].message.content,"sources":sources}
 
 def main():
     while 1:
         s = input("请输入向大模型提问的问题")
-        if s == "exit":
+        if s.strip().lower() == "exit":
             break
         print(answer_with_rag(s))
         
